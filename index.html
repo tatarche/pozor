@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Позорники Москвы — главный позорник Арсений Струков</title>
+    <!-- Google Fonts & Font Awesome 6 (free) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f9faff 0%, #f0f3fd 100%);
+            font-family: 'Inter', sans-serif;
+            color: #1a1e2b;
+            line-height: 1.4;
+            padding: 2rem 1.5rem;
+            min-height: 100vh;
+        }
+
+        /* контейнер с мягкой тенью */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            animation: fadeSlideUp 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+        }
+
+        /* заголовочная секция */
+        .hero {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .badge-light {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(230, 100, 92, 0.12);
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(230, 100, 92, 0.25);
+            border-radius: 100px;
+            padding: 0.4rem 1.2rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            color: #c2574f;
+            margin-bottom: 1.2rem;
+        }
+
+        h1 {
+            font-size: 3.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1f1f3a, #b14b42);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.6rem;
+        }
+
+        .subhead {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #5a5f7a;
+            background: rgba(255,255,240,0.6);
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* карточка таблицы */
+        .table-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0,0,0,0.02);
+            border: 1px solid rgba(230, 230, 250, 0.8);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .shame-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .shame-table th {
+            text-align: left;
+            padding: 1.2rem 1rem;
+            background: #fefaf5;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #6c5b7b;
+            border-bottom: 1px solid #ede7f0;
+        }
+
+        .shame-table td {
+            padding: 1.2rem 1rem;
+            border-bottom: 1px solid #f0ebf3;
+            vertical-align: middle;
+            background-color: #ffffff;
+            transition: background 0.2s;
+        }
+
+        .shame-table tr:hover td {
+            background-color: #fffaf7;
+        }
+
+        .rank-cell {
+            font-weight: 800;
+            color: #e6645c;
+            font-size: 1.1rem;
+        }
+
+        .name-cell {
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .shame-icon-light {
+            background: #ffe3e0;
+            border-radius: 40px;
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #e6645c;
+            font-size: 1rem;
+        }
+
+        .deed-cell {
+            color: #3e3a4b;
+            font-weight: 500;
+        }
+
+        .level-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f2eef9;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #4a3b6e;
+            width: fit-content;
+            backdrop-filter: blur(2px);
+        }
+
+        .points-cell {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #1f2b3c;
+            letter-spacing: -0.5px;
+        }
+
+        .dislike-btn {
+            background: #f1e7e6;
+            border: none;
+            padding: 0.55rem 1.1rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #a03e36;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .dislike-btn i {
+            font-size: 1rem;
+            transition: transform 0.1s;
+        }
+
+        .dislike-btn:hover {
+            background: #ffdad5;
+            transform: scale(0.97);
+            box-shadow: 0 2px 6px rgba(230, 100, 92, 0.2);
+        }
+
+        .dislike-btn:active {
+            transform: scale(0.94);
+        }
+
+        /* инфо панель под таблицей */
+        .info-panel {
+            margin-top: 1.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            border-radius: 1.8rem;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid #fff0e8;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #4a4a6a;
+        }
+
+        .stat i {
+            font-size: 1rem;
+            color: #e6645c;
+        }
+
+        .reset-btn {
+            background: none;
+            border: 1px solid #ddd2e6;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #6c5b7b;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .reset-btn:hover {
+            background: #f5eefb;
+            border-color: #e0c8f0;
+            color: #a03e36;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: #8a84a2;
+            background: rgba(255,255,250,0.5);
+            padding: 0.8rem;
+            border-radius: 3rem;
+        }
+
+        /* адаптивность: мобильная версия */
+        @media (max-width: 780px) {
+            body {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 2.3rem;
+            }
+            .shame-table th, .shame-table td {
+                padding: 0.9rem 0.7rem;
+            }
+            .points-cell {
+                font-size: 1.1rem;
+            }
+            .dislike-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* для экранов < 650px — карточный вид таблицы */
+        @media (max-width: 650px) {
+            .shame-table thead {
+                display: none;
+            }
+            .shame-table, .shame-table tbody, .shame-table tr, .shame-table td {
+                display: block;
+                width: 100%;
+            }
+            .shame-table tr {
+                margin-bottom: 1.2rem;
+                background: #ffffff;
+                border-radius: 1.5rem;
+                padding: 0.6rem;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+                border: 1px solid #f2e4f0;
+            }
+            .shame-table td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                text-align: right;
+                padding: 0.7rem 0.9rem;
+                border-bottom: 1px solid #f3eaf5;
+            }
+            .shame-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                color: #8f86aa;
+            }
+            .level-badge {
+                justify-content: flex-end;
+                width: auto;
+            }
+            .dislike-btn {
+                justify-content: center;
+                width: 100%;
+            }
+            .name-cell {
+                justify-content: space-between;
+            }
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* дополнительная анимация для счётчика */
+        .point-bump {
+            animation: bump 0.2s ease-out;
+        }
+
+        @keyframes bump {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); color: #e6645c; }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="hero">
+        <div class="badge-light">
+            <i class="fas fa-gavel"></i> <span>реестр позора • Москва</span> <i class="fas fa-city"></i>
+        </div>
+        <h1>Позорники Москвы</h1>
+        <div class="subhead">
+            <i class="fas fa-dice-d6"></i> единственный фигурант — антигерой столицы
+        </div>
+    </div>
+
+    <div class="table-card">
+        <table class="shame-table" id="shameTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Позорник</th>
+                    <th>Позорное деяние</th>
+                    <th>Уровень позора</th>
+                    <th>⚡ Баллы позора</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Единственный главный позорник: Арсений Струков -->
+                <tr id="shameRow">
+                    <td data-label="#" class="rank-cell">
+                        <i class="fas fa-crown" style="color: #e6a017; font-size: 0.85rem; margin-right: 5px;"></i> 01
+                    </td>
+                    <td data-label="Позорник" class="name-cell">
+                        <span class="shame-icon-light"><i class="fas fa-user-alt-slash"></i></span>
+                        Арсений Струков
+                    </td>
+                    <td data-label="Позорное деяние" class="deed-cell">
+                        <i class="fas fa-skull-crossbones" style="margin-right: 6px; color: #e6645c;"></i> 
+                        Абсолютный антирекорд · позорный мем столицы 2026
+                    </td>
+                    <td data-label="Уровень позора" id="shameLevelCell">
+                        <span class="level-badge" id="levelBadge">
+                            <i class="fas fa-fire"></i> Начальный позор
+                        </span>
+                    </td>
+                    <td data-label="Баллы позора" class="points-cell" id="pointsDisplay">
+                        0
+                    </td>
+                    <td data-label="Действие">
+                        <button class="dislike-btn" id="dislikeBtn">
+                            <i class="fas fa-thumbs-down"></i> Дизлайк +1
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="info-panel">
+        <div class="stat">
+            <i class="fas fa-database"></i> <span>Главный позорник: <strong>Арсений Струков</strong></span>
+        </div>
+        <div class="stat">
+            <i class="fas fa-chart-simple"></i> <span>Общий счёт позора: <strong id="totalPointsStat">0</strong> баллов</span>
+        </div>
+        <div class="stat">
+            <button class="reset-btn" id="resetBtn">
+                <i class="fas fa-undo-alt"></i> Сбросить баллы
+            </button>
+        </div>
+    </div>
+    <div class="footer-note">
+        <i class="far fa-save"></i> Данные сохраняются в вашем браузере (localStorage) — каждый посетитель набирает персональные «баллы позора» для Арсения. 
+        Чтобы добавить позора — жмите дизлайк. <i class="fas fa-laugh-squint"></i>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ключ для хранения баллов позора (локально)
+        const STORAGE_KEY = "arseniy_shame_points";
+        
+        // элементы DOM
+        const pointsDisplaySpan = document.getElementById("pointsDisplay");
+        const totalPointsStatSpan = document.getElementById("totalPointsStat");
+        const dislikeButton = document.getElementById("dislikeBtn");
+        const resetButton = document.getElementById("resetBtn");
+        const levelBadgeSpan = document.getElementById("levelBadge");
+        
+        // функция для получения уровня позора на основе баллов
+        function getShameLevel(points) {
+            if (points < 3) {
+                return { text: "Начальный позор", icon: "🌱", colorStyle: "#9b8c7c" };
+            } else if (points >= 3 && points < 7) {
+                return { text: "Заметный позор", icon: "⚠️", colorStyle: "#d9956b" };
+            } else if (points >= 7 && points < 12) {
+                return { text: "Тяжкий позор", icon: "💥", colorStyle: "#cb6e6e" };
+            } else if (points >= 12 && points < 20) {
+                return { text: "Критический позор", icon: "🔥🔥", colorStyle: "#bf4d3e" };
+            } else {
+                return { text: "Позорище века", icon: "🏆💀", colorStyle: "#a13028" };
+            }
+        }
+        
+        // обновление интерфейса (баллы, уровень, статистика)
+        function updateShameUI(points) {
+            // обновляем ячейку с баллами
+            if (pointsDisplaySpan) {
+                pointsDisplaySpan.innerText = points;
+                // добавляем анимацию "bump"
+                pointsDisplaySpan.classList.add('point-bump');
+                setTimeout(() => {
+                    pointsDisplaySpan.classList.remove('point-bump');
+                }, 200);
+            }
+            // обновляем стат в панели
+            if (totalPointsStatSpan) {
+                totalPointsStatSpan.innerText = points;
+            }
+            
+            // обновляем уровень позора с иконкой и текстом
+            const levelInfo = getShameLevel(points);
+            if (levelBadgeSpan) {
+                // сохраняем стиль оформления в соответствии с уровнем
+                levelBadgeSpan.innerHTML = `<i class="fas fa-dragon"></i> ${levelInfo.icon} ${levelInfo.text}`;
+                // динамически меняем цвет бейджа (приятные приглушённые тона)
+                if (points < 3) {
+                    levelBadgeSpan.style.backgroundColor = "#f0eee9";
+                    levelBadgeSpan.style.color = "#6b5e4a";
+                } else if (points < 7) {
+                    levelBadgeSpan.style.backgroundColor = "#fde9e0";
+                    levelBadgeSpan.style.color = "#b45f3b";
+                } else if (points < 12) {
+                    levelBadgeSpan.style.backgroundColor = "#ffe0db";
+                    levelBadgeSpan.style.color = "#b13b2c";
+                } else {
+                    levelBadgeSpan.style.backgroundColor = "#ffd1cc";
+                    levelBadgeSpan.style.color = "#8a2c1f";
+                }
+            }
+        }
+        
+        // загрузить баллы из localStorage
+        function loadPoints() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored !== null && !isNaN(parseInt(stored))) {
+                return parseInt(stored);
+            }
+            return 0;
+        }
+        
+        // сохранить баллы
+        function savePoints(points) {
+            localStorage.setItem(STORAGE_KEY, points);
+        }
+        
+        // добавить балл позора (дизлайк)
+        function addShamePoint() {
+            let currentPoints = loadPoints();
+            currentPoints += 1;
+            savePoints(currentPoints);
+            updateShameUI(currentPoints);
+            // дополнительная анимация на кнопке
+            if (dislikeButton) {
+                dislikeButton.style.transform = "scale(0.94)";
+                setTimeout(() => {
+                    dislikeButton.style.transform = "";
+                }, 120);
+            }
+        }
+        
+        // сброс баллов (с подтверждением)
+        function resetPoints() {
+            const confirmReset = confirm("⚠️ Сбросить все баллы позора для Арсения Струкова? (только в вашем браузере)");
+            if (confirmReset) {
+                savePoints(0);
+                updateShameUI(0);
+                // небольшая подсказка
+                const footerNote = document.querySelector('.footer-note');
+                if (footerNote) {
+                    const originalText = footerNote.innerHTML;
+                    footerNote.innerHTML = '<i class="fas fa-broom"></i> Баллы сброшены! Снова жмите дизлайк, чтобы увеличить позор.';
+                    setTimeout(() => {
+                        footerNote.innerHTML = originalText;
+                    }, 2000);
+                }
+            }
+        }
+        
+        // инициализация: загружаем баллы и рисуем UI
+        function init() {
+            const points = loadPoints();
+            updateShameUI(points);
+            
+            // обработчик для кнопки дизлайка
+            if (dislikeButton) {
+                dislikeButton.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    addShamePoint();
+                });
+            }
+            
+            // обработчик для кнопки сброса
+            if (resetButton) {
+                resetButton.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    resetPoints();
+                });
+            }
+        }
+        
+        // старт после загрузки DOM
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", init);
+        } else {
+            init();
+        }
+    })();
+</script>
+</body>
+</html>
