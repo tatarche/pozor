@@ -2,17 +2,17 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Позорники Москвы — самые конченые пидараски</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Позорники Москвы — общий счёт</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: linear-gradient(145deg, #f9faff 0%, #f0f3fd 100%);
             font-family: 'Inter', sans-serif;
             padding: 2rem 1.5rem;
-            min-height: 100vh;
         }
         .container { max-width: 1280px; margin: 0 auto; }
         .hero { text-align: center; margin-bottom: 2rem; }
@@ -23,7 +23,6 @@
             -webkit-background-clip: text;
             color: transparent;
         }
-        .subhead { color: #5a5f7a; margin-top: 0.5rem; }
         .table-card {
             background: white;
             border-radius: 2rem;
@@ -32,8 +31,8 @@
         }
         .shame-table { width: 100%; border-collapse: collapse; }
         .shame-table th, .shame-table td { padding: 1rem; text-align: left; border-bottom: 1px solid #ede7f0; }
-        .shame-table th { background: #fefaf5; font-weight: 600; text-transform: uppercase; font-size: 0.75rem; }
-        .rank-cell { font-weight: 800; color: #e6645c; font-size: 1.1rem; }
+        .shame-table th { background: #fefaf5; font-weight: 600; text-transform: uppercase; }
+        .rank-cell { font-weight: 800; color: #e6645c; }
         .name-cell { display: flex; align-items: center; gap: 10px; font-weight: 700; }
         .points-cell { font-weight: 800; font-size: 1.5rem; color: #1f2b3c; }
         .dislike-btn {
@@ -42,46 +41,24 @@
             padding: 0.5rem 1.2rem;
             border-radius: 60px;
             font-weight: 600;
-            font-size: 0.9rem;
-            color: #a03e36;
             cursor: pointer;
             transition: 0.1s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
         }
         .dislike-btn:active { transform: scale(0.96); }
         .info-panel {
             margin-top: 1.5rem;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
             background: rgba(255,255,255,0.8);
             border-radius: 1.8rem;
             padding: 0.8rem 1.5rem;
-            gap: 1rem;
         }
-        .reset-btn {
-            background: none;
-            border: 1px solid #ddd2e6;
-            border-radius: 50px;
-            padding: 0.3rem 1rem;
-            cursor: pointer;
-            font-size: 0.75rem;
-        }
-        .footer-note { text-align: center; margin-top: 2rem; font-size: 0.7rem; color: #8a84a2; }
+        .footer-note { text-align: center; margin-top: 2rem; font-size: 0.7rem; color: gray; }
         @media (max-width: 650px) {
             .shame-table thead { display: none; }
-            .shame-table tr { display: block; margin-bottom: 1rem; border: 1px solid #f0ebf3; border-radius: 1rem; background: white; }
-            .shame-table td { display: flex; justify-content: space-between; align-items: center; }
-            .shame-table td::before { content: attr(data-label); font-weight: 600; font-size: 0.7rem; color: #6c5b7b; }
-        }
-        .point-bump { animation: bump 0.15s ease; }
-        @keyframes bump {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); color: #e6645c; }
-            100% { transform: scale(1); }
+            .shame-table tr { display: block; margin-bottom: 1rem; border-radius: 1rem; background: white; }
+            .shame-table td { display: flex; justify-content: space-between; }
+            .shame-table td::before { content: attr(data-label); font-weight: 600; }
         }
     </style>
 </head>
@@ -89,149 +66,93 @@
 <div class="container">
     <div class="hero">
         <h1>Позорники Москвы</h1>
-        <div class="subhead"><i class="fas fa-bolt"></i> мгновенное обновление — без задержек</div>
+        <div class="subhead">⚡ общий счёт позора — работает мгновенно</div>
     </div>
     <div class="table-card">
         <table class="shame-table">
             <thead><tr><th>#</th><th>Позорник</th><th>Позорное деяние</th><th>Баллы позора</th><th>Действие</th></tr></thead>
             <tbody>
                 <tr>
-                    <td data-label="#" class="rank-cell"><i class="fas fa-crown" style="color:#e6a017;"></i> 01</td>
-                    <td data-label="Позорник" class="name-cell"><i class="fas fa-user-alt-slash"></i> Арсений Струков</td>
-                    <td data-label="Позорное деяние">Чешет жопу об стул на уроках</td>
+                    <td data-label="#" class="rank-cell">01</td>
+                    <td data-label="Позорник" class="name-cell"><i class="fas fa-user-slash"></i> Арсений Струков</td>
+                    <td data-label="Позорное деяние">Абсолютный антирекорд столицы</td>
                     <td data-label="Баллы позора" class="points-cell" id="pointsDisplay">0</td>
-                    <td data-label="Действие"><button class="dislike-btn" id="dislikeBtn"><i class="fas fa-thumbs-down"></i> Дизлайк</button></td>
+                    <td data-label="Действие"><button class="dislike-btn" id="dislikeBtn"><i class="fas fa-thumbs-down"></i> Дизлайк +1</button></td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="info-panel">
-        <span><i class="fas fa-chart-line"></i> Общий счёт позора: <strong id="totalPointsStat">0</strong></span>
-        <button class="reset-btn" id="resetBtn"><i class="fas fa-trash-alt"></i> Сбросить</button>
+        <span>📊 Общий счёт позора: <strong id="totalPointsStat">0</strong></span>
+        <button id="resetBtn" style="background:none;border:1px solid #ccc;border-radius:20px;padding:4px 12px;">Сбросить</button>
     </div>
-    <div class="footer-note">
-        <i class="fas fa-cloud-upload-alt"></i> Баллы сохраняются в облаке. Изменения видны не всегда сразу(P.s. хостинг бесплатный и работает пиздец хуево)
-    </div>
+    <div class="footer-note">✅ Баллы хранятся в Supabase — видны всем посетителям</div>
 </div>
 
 <script>
-    // ==================== ВАШИ ДАННЫЕ ====================
-    const BIN_ID = "69e3654c36566621a8c7cdc8";
-    const API_KEY = "$2a$10$x7RrtwluOrONl9vFQ70e3.N3ylfNkZIHMGULEthRzc3kovNNKkjeS";
-    // =====================================================
+    // ========== ВАШИ ДАННЫЕ SUPABASE ==========
+    const SUPABASE_URL = "https://xqvjgniqsywphjybohnx.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_sX_ycd_Y1tfp9y8YDblLPw_ryBhD9fH";
+    // ==========================================
 
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const pointsSpan = document.getElementById("pointsDisplay");
     const totalSpan = document.getElementById("totalPointsStat");
     const dislikeBtn = document.getElementById("dislikeBtn");
     const resetBtn = document.getElementById("resetBtn");
 
     let currentPoints = 0;
-    let syncInProgress = false;
-    let pendingUpdate = null;
 
-    // Ключ для localStorage (кеш)
-    const CACHE_KEY = "shame_points_cache";
-
-    // Загрузка из кеша при старте
-    function loadFromCache() {
-        const cached = localStorage.getItem(CACHE_KEY);
-        if (cached !== null && !isNaN(parseInt(cached))) {
-            currentPoints = parseInt(cached);
-            updateUI(currentPoints);
+    async function loadPoints() {
+        const { data, error } = await supabase
+            .from('shame_counter')
+            .select('points')
+            .eq('id', 1)
+            .single();
+        if (error) {
+            console.error("Ошибка загрузки:", error);
+            // Если таблицы ещё нет, создадим её автоматически (но лучше сделать через SQL)
+            return;
         }
+        currentPoints = data?.points || 0;
+        updateUI(currentPoints);
+    }
+
+    async function updatePoints(newPoints) {
+        const { error } = await supabase
+            .from('shame_counter')
+            .update({ points: newPoints })
+            .eq('id', 1);
+        if (error) {
+            console.error("Ошибка обновления:", error);
+            alert("Не удалось обновить баллы. Возможно, таблица не создана.");
+            return false;
+        }
+        currentPoints = newPoints;
+        updateUI(currentPoints);
+        return true;
     }
 
     function updateUI(points) {
         pointsSpan.innerText = points;
         totalSpan.innerText = points;
-        pointsSpan.classList.add("point-bump");
-        setTimeout(() => pointsSpan.classList.remove("point-bump"), 150);
-        // сохраняем в кеш
-        localStorage.setItem(CACHE_KEY, points);
+        pointsSpan.style.transform = "scale(1.1)";
+        setTimeout(() => pointsSpan.style.transform = "", 150);
     }
 
-    // Фоновая синхронизация с сервером (без блокировки UI)
-    async function syncWithServer(forcedPoints = null) {
-        if (syncInProgress) {
-            // если уже идёт синхронизация, запомним последнее значение
-            if (forcedPoints !== null) pendingUpdate = forcedPoints;
-            return;
-        }
-        syncInProgress = true;
-        try {
-            let pointsToSend = (forcedPoints !== null) ? forcedPoints : currentPoints;
-            // 1. Сначала попробуем получить актуальные с сервера (чтобы не затереть чужие обновления)
-            const getResp = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-                headers: { "X-Master-Key": API_KEY }
-            });
-            if (getResp.ok) {
-                const data = await getResp.json();
-                let serverPoints = data.record?.shamelessPoints ?? 0;
-                // Если у нас новое значение (например, после клика) — берём максимум (или сумму? но логичнее увеличивать)
-                // Так как дизлайк увеличивает, то если serverPoints < currentPoints, значит кто-то уже накрутил — сохраняем максимум
-                let newPoints = Math.max(serverPoints, currentPoints);
-                if (newPoints !== serverPoints || forcedPoints !== null) {
-                    // Отправляем на сервер
-                    await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "X-Master-Key": API_KEY
-                        },
-                        body: JSON.stringify({ shamelessPoints: newPoints })
-                    });
-                }
-                if (newPoints !== currentPoints) {
-                    currentPoints = newPoints;
-                    updateUI(currentPoints);
-                }
-            } else {
-                // Если не удалось прочитать, просто отправим текущее
-                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-Master-Key": API_KEY
-                    },
-                    body: JSON.stringify({ shamelessPoints: currentPoints })
-                });
-            }
-        } catch (err) {
-            console.warn("Фоновая синхронизация не удалась", err);
-        } finally {
-            syncInProgress = false;
-            if (pendingUpdate !== null) {
-                let temp = pendingUpdate;
-                pendingUpdate = null;
-                await syncWithServer(temp);
-            }
-        }
-    }
-
-    // Добавление балла (мгновенно на UI, фоном на сервер)
     async function addPoint() {
-        currentPoints++;
-        updateUI(currentPoints);
-        // фоновая синхронизация без ожидания
-        syncWithServer(currentPoints);
+        await updatePoints(currentPoints + 1);
     }
 
-    // Сброс (тоже мгновенный)
     async function resetPoints() {
-        if (confirm("Сбросить общий счёт позора? Это увидят все!")) {
-            currentPoints = 0;
-            updateUI(currentPoints);
-            syncWithServer(0);
+        if (confirm("Сбросить общий счёт позора для всех?")) {
+            await updatePoints(0);
         }
     }
-
-    // При загрузке страницы: показать кеш, потом синхронизироваться с сервером
-    loadFromCache();
-    // Запускаем фоновую синхронизацию (она обновит, если на сервере больше)
-    syncWithServer();
 
     dislikeBtn.onclick = addPoint;
     resetBtn.onclick = resetPoints;
+    loadPoints();
 </script>
 </body>
 </html>
