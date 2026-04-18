@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="icon" href="favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Позорники Москвы</title>
+    <title>Позорники Москвы — реестр</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- favicon-эмодзи (опционально) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231e293b' rx='20'/%3E%3Cpath d='M50 20 L70 40 L70 70 L50 85 L30 70 L30 40 Z' fill='none' stroke='%23e63946' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='8' fill='%23e63946'/%3E%3C/svg%3E">
     <style>
         * {
             margin: 0;
@@ -22,7 +23,7 @@
             line-height: 1.5;
         }
 
-        /* экспериментальная сетка: 2 колонки, таблица смещена */
+        /* сетка как в прошлом варианте */
         .dashboard {
             max-width: 1400px;
             margin: 0 auto;
@@ -32,15 +33,88 @@
             align-items: start;
         }
 
-        /* левая колонка — профиль позорника и карточки фактов */
+        /* ЛЕВАЯ КАРТОЧКА — с эффектом наклона */
         .profile-section {
             background: white;
             border-radius: 2rem;
             padding: 1.8rem;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            border: 1px solid #eef2f8;
+            transition: transform 0.1s ease-out, box-shadow 0.2s;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        /* Правая колонка — без наклона */
+        .table-section {
+            background: white;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.08);
             border: 1px solid #eef2f8;
         }
 
+        /* заголовок таблицы */
+        .table-header {
+            background: #1e293b;
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header span:first-child {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* стили таблицы */
+        .shame-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .shame-table th {
+            text-align: left;
+            padding: 1rem 1.2rem;
+            background: #f1f5f9;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #475569;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .shame-table td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid #eef2f8;
+            font-weight: 500;
+        }
+
+        .shame-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rank-number {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #e63946;
+        }
+
+        .level-tag {
+            background: #e63946;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        /* левая карточка: стили текста */
         .shame-header {
             display: flex;
             align-items: center;
@@ -129,86 +203,19 @@
             margin-top: 2px;
         }
 
-        /* правая колонка — таблица, но в необычном оформлении */
-        .table-section {
-            background: white;
-            border-radius: 2rem;
-            overflow: hidden;
-            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.08);
-            border: 1px solid #eef2f8;
-            transform: translateY(2rem);
-        }
-
-        .table-header {
-            background: #1e293b;
-            color: white;
-            padding: 1rem 1.5rem;
-            font-weight: 700;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .table-header span:first-child {
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .shame-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .shame-table th {
-            text-align: left;
-            padding: 1rem 1.2rem;
-            background: #f1f5f9;
-            font-weight: 700;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            color: #475569;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .shame-table td {
-            padding: 1rem 1.2rem;
-            border-bottom: 1px solid #eef2f8;
-            font-weight: 500;
-        }
-
-        .shame-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .rank-number {
-            font-weight: 800;
-            font-size: 1.2rem;
-            color: #e63946;
-        }
-
-        .level-tag {
-            background: #e63946;
-            color: white;
-            padding: 0.2rem 0.8rem;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            display: inline-block;
-        }
-
-        /* дополнительная секция — как подвал с цитатой */
-        .quote-block {
+        /* нижняя подпись (66 список...) */
+        .footer-signature {
             grid-column: span 2;
-            margin-top: 1rem;
-            background: #ffffffd9;
-            backdrop-filter: blur(4px);
-            border-radius: 1.5rem;
-            padding: 1rem 2rem;
+            margin-top: 2rem;
             text-align: center;
-            border: 1px solid #eef2f8;
             font-size: 0.85rem;
+            font-weight: 600;
             color: #475569;
+            background: #ffffffcc;
+            backdrop-filter: blur(4px);
+            padding: 0.8rem;
+            border-radius: 2rem;
+            border: 1px solid #eef2f8;
         }
 
         /* адаптив */
@@ -217,8 +224,8 @@
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
-            .table-section {
-                transform: translateY(0);
+            .footer-signature {
+                grid-column: span 1;
             }
             body {
                 padding: 1rem;
@@ -252,21 +259,12 @@
                 color: #e63946;
             }
         }
-
-        /* мелкие штрихи */
-        .footer-note {
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 0.7rem;
-            color: #94a3b8;
-            grid-column: span 2;
-        }
     </style>
 </head>
 <body>
 <div class="dashboard">
-    <!-- левая колонка: профиль позорника -->
-    <div class="profile-section">
+    <!-- Левая карточка с эффектом наклона -->
+    <div class="profile-section" id="tiltCard">
         <div class="shame-header">
             <div class="rank-badge">#1</div>
             <h2>Позор <span>года</span></h2>
@@ -276,7 +274,7 @@
         </div>
         <div class="bio">
             <h3>Арсений Струков</h3>
-            <div class="title-shame"><i class="fas fa-skull"></i> самый главный пидарас</div>
+            <div class="title-shame"><i class="fas fa-thumbtack"></i> самый главный пидарас</div>
         </div>
         <div class="fact-list">
             <div class="fact-item"><i class="fas fa-check-circle"></i> <span>Единственный фигурант реестра «Позорники Москвы»</span></div>
@@ -286,35 +284,62 @@
         </div>
     </div>
 
-    <!-- правая колонка: таблица (нестандартное расположение, смещена вниз) -->
+    <!-- Правая колонка: таблица -->
     <div class="table-section">
         <div class="table-header">
-            <span>реестр позора</span>
+            <span>РЕЕСТР ПОЗОРА</span>
             <span><i class="fas fa-gavel"></i> вердикт</span>
         </div>
         <table class="shame-table">
             <thead>
-                <tr><th>#</th><th>Имя</th><th>Деяние</th><th>Уровень</th></tr>
+                <tr><th>#</th><th>ИМЯ</th><th>ДЕЯНИЕ</th><th>УРОВЕНЬ</th></tr>
             </thead>
             <tbody>
                 <tr>
                     <td data-label="#" class="rank-number">01</td>
-                    <td data-label="Имя">Арсений Струков</td>
-                    <td data-label="Деяние">Чешет жопу об стул на уроках</td>
-                    <td data-label="Уровень"><span class="level-tag">МАКСИМАЛЬНЫЙ</span></td>
+                    <td data-label="ИМЯ">Арсений Струков</td>
+                    <td data-label="ДЕЯНИЕ">Чешет жопу об стул на уроках</td>
+                    <td data-label="УРОВЕНЬ"><span class="level-tag">МАКСИМАЛЬНЫЙ</span></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- цитата / подпись -->
-    <div class="quote-block">
-        <i class="fas fa-quote-left" style="color: #e63946; margin-right: 8px;"></i> 
-        Список аморальных ублюдков.
-    </div>
-    <div class="footer-note">
-        <i class="fas fa-database"></i> Единый официальный список позорников Москвы. Только факт.
+    <!-- Нижняя подпись -->
+    <div class="footer-signature">
+        <i class="fas fa-skull-crossbones"></i> 66 Список аморальных ублюдков. <i class="fas fa-dragon"></i>
     </div>
 </div>
+
+<script>
+    // Эффект наклона для левой карточки
+    const card = document.getElementById('tiltCard');
+    let bounds = card.getBoundingClientRect();
+
+    function updateBounds() {
+        bounds = card.getBoundingClientRect();
+    }
+    window.addEventListener('resize', updateBounds);
+    updateBounds();
+
+    card.addEventListener('mousemove', function(e) {
+        const mouseX = e.clientX - bounds.left;
+        const mouseY = e.clientY - bounds.top;
+        const centerX = bounds.width / 2;
+        const centerY = bounds.height / 2;
+        
+        // нормализованные значения от -1 до 1
+        const rotX = ((mouseY - centerY) / centerY) * 6;   // макс. наклон 6 градусов
+        const rotY = ((mouseX - centerX) / centerX) * -6;  // инверсия для естественного вращения
+        
+        card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(2px)`;
+        card.style.transition = 'transform 0.05s linear';
+    });
+
+    card.addEventListener('mouseleave', function() {
+        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+        card.style.transition = 'transform 0.25s ease-out';
+    });
+</script>
 </body>
 </html>
