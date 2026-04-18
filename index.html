@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Позорники Москвы — общий счёт позора</title>
+    <title>Позорники Москвы — самые конченые пидараски</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -32,7 +32,7 @@
         }
         .shame-table { width: 100%; border-collapse: collapse; }
         .shame-table th, .shame-table td { padding: 1rem; text-align: left; border-bottom: 1px solid #ede7f0; }
-        .shame-table th { background: #fefaf5; font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; }
+        .shame-table th { background: #fefaf5; font-weight: 600; text-transform: uppercase; font-size: 0.75rem; }
         .rank-cell { font-weight: 800; color: #e6645c; font-size: 1.1rem; }
         .name-cell { display: flex; align-items: center; gap: 10px; font-weight: 700; }
         .points-cell { font-weight: 800; font-size: 1.5rem; color: #1f2b3c; }
@@ -45,12 +45,12 @@
             font-size: 0.9rem;
             color: #a03e36;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.1s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
-        .dislike-btn:hover { background: #ffdad5; transform: scale(0.96); }
+        .dislike-btn:active { transform: scale(0.96); }
         .info-panel {
             margin-top: 1.5rem;
             display: flex;
@@ -69,9 +69,7 @@
             padding: 0.3rem 1rem;
             cursor: pointer;
             font-size: 0.75rem;
-            transition: 0.2s;
         }
-        .reset-btn:hover { background: #f5eefb; }
         .footer-note { text-align: center; margin-top: 2rem; font-size: 0.7rem; color: #8a84a2; }
         @media (max-width: 650px) {
             .shame-table thead { display: none; }
@@ -79,26 +77,11 @@
             .shame-table td { display: flex; justify-content: space-between; align-items: center; }
             .shame-table td::before { content: attr(data-label); font-weight: 600; font-size: 0.7rem; color: #6c5b7b; }
         }
-        .point-bump { animation: bump 0.2s ease; }
+        .point-bump { animation: bump 0.15s ease; }
         @keyframes bump {
             0% { transform: scale(1); }
-            50% { transform: scale(1.2); color: #e6645c; }
+            50% { transform: scale(1.15); color: #e6645c; }
             100% { transform: scale(1); }
-        }
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1a1e2b;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
         }
     </style>
 </head>
@@ -106,7 +89,7 @@
 <div class="container">
     <div class="hero">
         <h1>Позорники Москвы</h1>
-        <div class="subhead"><i class="fas fa-globe"></i> единый счёт позора для всех посетителей</div>
+        <div class="subhead"><i class="fas fa-bolt"></i> мгновенное обновление — без задержек</div>
     </div>
     <div class="table-card">
         <table class="shame-table">
@@ -115,9 +98,9 @@
                 <tr>
                     <td data-label="#" class="rank-cell"><i class="fas fa-crown" style="color:#e6a017;"></i> 01</td>
                     <td data-label="Позорник" class="name-cell"><i class="fas fa-user-alt-slash"></i> Арсений Струков</td>
-                    <td data-label="Позорное деяние">Абсолютный антирекорд столицы · позорный мем 2026</td>
+                    <td data-label="Позорное деяние">Чешет жопу об стул на уроках</td>
                     <td data-label="Баллы позора" class="points-cell" id="pointsDisplay">0</td>
-                    <td data-label="Действие"><button class="dislike-btn" id="dislikeBtn"><i class="fas fa-thumbs-down"></i> Дизлайк +1</button></td>
+                    <td data-label="Действие"><button class="dislike-btn" id="dislikeBtn"><i class="fas fa-thumbs-down"></i> Дизлайк</button></td>
                 </tr>
             </tbody>
         </table>
@@ -127,62 +110,34 @@
         <button class="reset-btn" id="resetBtn"><i class="fas fa-trash-alt"></i> Сбросить</button>
     </div>
     <div class="footer-note">
-        <i class="fas fa-cloud-upload-alt"></i> Баллы хранятся в облаке — видны всем. Нажмите дизлайк, чтобы увеличить позор Арсения.
+        <i class="fas fa-cloud-upload-alt"></i> Баллы сохраняются в облаке. Изменения видны не всегда сразу(P.s. хостинг бесплатный и работает пиздец хуево)
     </div>
 </div>
-<div id="toast" class="toast"></div>
 
 <script>
-    // ==================== ВАШИ ДАННЫЕ JSONBIN ====================
+    // ==================== ВАШИ ДАННЫЕ ====================
     const BIN_ID = "69e3654c36566621a8c7cdc8";
     const API_KEY = "$2a$10$x7RrtwluOrONl9vFQ70e3.N3ylfNkZIHMGULEthRzc3kovNNKkjeS";
-    // ==============================================================
+    // =====================================================
 
     const pointsSpan = document.getElementById("pointsDisplay");
     const totalSpan = document.getElementById("totalPointsStat");
     const dislikeBtn = document.getElementById("dislikeBtn");
     const resetBtn = document.getElementById("resetBtn");
-    const toast = document.getElementById("toast");
 
-    function showMessage(msg, isError = false) {
-        toast.textContent = msg;
-        toast.style.backgroundColor = isError ? "#b14b42" : "#1a1e2b";
-        toast.style.opacity = "1";
-        setTimeout(() => { toast.style.opacity = "0"; }, 2000);
-    }
+    let currentPoints = 0;
+    let syncInProgress = false;
+    let pendingUpdate = null;
 
-    async function loadPoints() {
-        try {
-            const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-                headers: { "X-Master-Key": API_KEY }
-            });
-            if (!response.ok) throw new Error("Ошибка загрузки");
-            const data = await response.json();
-            const points = data.record?.shamelessPoints ?? 0;
-            updateUI(points);
-        } catch (err) {
-            console.warn(err);
-            showMessage("Не удалось загрузить баллы, попробуйте позже", true);
-            updateUI(0);
-        }
-    }
+    // Ключ для localStorage (кеш)
+    const CACHE_KEY = "shame_points_cache";
 
-    async function savePoints(points) {
-        try {
-            const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-Master-Key": API_KEY
-                },
-                body: JSON.stringify({ shamelessPoints: points })
-            });
-            if (!response.ok) throw new Error("Ошибка сохранения");
-            updateUI(points);
-            showMessage("Баллы обновлены! Позор растёт 💀");
-        } catch (err) {
-            console.error(err);
-            showMessage("Ошибка: не удалось сохранить баллы", true);
+    // Загрузка из кеша при старте
+    function loadFromCache() {
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (cached !== null && !isNaN(parseInt(cached))) {
+            currentPoints = parseInt(cached);
+            updateUI(currentPoints);
         }
     }
 
@@ -190,23 +145,93 @@
         pointsSpan.innerText = points;
         totalSpan.innerText = points;
         pointsSpan.classList.add("point-bump");
-        setTimeout(() => pointsSpan.classList.remove("point-bump"), 200);
+        setTimeout(() => pointsSpan.classList.remove("point-bump"), 150);
+        // сохраняем в кеш
+        localStorage.setItem(CACHE_KEY, points);
     }
 
-    async function addPoint() {
-        let current = parseInt(pointsSpan.innerText);
-        await savePoints(current + 1);
-    }
-
-    async function resetPoints() {
-        if (confirm("Сбросить общий счёт позора? Это увидят все посетители!")) {
-            await savePoints(0);
+    // Фоновая синхронизация с сервером (без блокировки UI)
+    async function syncWithServer(forcedPoints = null) {
+        if (syncInProgress) {
+            // если уже идёт синхронизация, запомним последнее значение
+            if (forcedPoints !== null) pendingUpdate = forcedPoints;
+            return;
+        }
+        syncInProgress = true;
+        try {
+            let pointsToSend = (forcedPoints !== null) ? forcedPoints : currentPoints;
+            // 1. Сначала попробуем получить актуальные с сервера (чтобы не затереть чужие обновления)
+            const getResp = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                headers: { "X-Master-Key": API_KEY }
+            });
+            if (getResp.ok) {
+                const data = await getResp.json();
+                let serverPoints = data.record?.shamelessPoints ?? 0;
+                // Если у нас новое значение (например, после клика) — берём максимум (или сумму? но логичнее увеличивать)
+                // Так как дизлайк увеличивает, то если serverPoints < currentPoints, значит кто-то уже накрутил — сохраняем максимум
+                let newPoints = Math.max(serverPoints, currentPoints);
+                if (newPoints !== serverPoints || forcedPoints !== null) {
+                    // Отправляем на сервер
+                    await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-Master-Key": API_KEY
+                        },
+                        body: JSON.stringify({ shamelessPoints: newPoints })
+                    });
+                }
+                if (newPoints !== currentPoints) {
+                    currentPoints = newPoints;
+                    updateUI(currentPoints);
+                }
+            } else {
+                // Если не удалось прочитать, просто отправим текущее
+                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Master-Key": API_KEY
+                    },
+                    body: JSON.stringify({ shamelessPoints: currentPoints })
+                });
+            }
+        } catch (err) {
+            console.warn("Фоновая синхронизация не удалась", err);
+        } finally {
+            syncInProgress = false;
+            if (pendingUpdate !== null) {
+                let temp = pendingUpdate;
+                pendingUpdate = null;
+                await syncWithServer(temp);
+            }
         }
     }
 
+    // Добавление балла (мгновенно на UI, фоном на сервер)
+    async function addPoint() {
+        currentPoints++;
+        updateUI(currentPoints);
+        // фоновая синхронизация без ожидания
+        syncWithServer(currentPoints);
+    }
+
+    // Сброс (тоже мгновенный)
+    async function resetPoints() {
+        if (confirm("Сбросить общий счёт позора? Это увидят все!")) {
+            currentPoints = 0;
+            updateUI(currentPoints);
+            syncWithServer(0);
+        }
+    }
+
+    // При загрузке страницы: показать кеш, потом синхронизироваться с сервером
+    loadFromCache();
+    // Запускаем фоновую синхронизацию (она обновит, если на сервере больше)
+    syncWithServer();
+
     dislikeBtn.onclick = addPoint;
     resetBtn.onclick = resetPoints;
-    loadPoints();
 </script>
 </body>
 </html>
