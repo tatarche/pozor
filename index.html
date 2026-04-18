@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Позорники Москвы — дело Струкова</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f6fa;
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+            padding: 2rem;
+            line-height: 1.5;
+        }
+
+        /* экспериментальная сетка: 2 колонки, таблица смещена */
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 0.9fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* левая колонка — профиль позорника и карточки фактов */
+        .profile-section {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f8;
+        }
+
+        .shame-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #e63946;
+        }
+
+        .rank-badge {
+            background: #e63946;
+            color: white;
+            font-weight: 800;
+            font-size: 1.2rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(230,57,70,0.2);
+        }
+
+        .shame-header h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .shame-header h2 span {
+            color: #e63946;
+        }
+
+        .avatar-large {
+            background: #f1f5f9;
+            border-radius: 80px;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem auto;
+            font-size: 3rem;
+            color: #e63946;
+            border: 2px solid #e6394620;
+        }
+
+        .bio {
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .bio h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .title-shame {
+            color: #e63946;
+            font-weight: 600;
+            background: #fff0f0;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .fact-list {
+            margin-top: 2rem;
+            background: #f8fafc;
+            padding: 1.2rem;
+            border-radius: 1.2rem;
+        }
+
+        .fact-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .fact-item i {
+            color: #e63946;
+            width: 24px;
+            margin-top: 2px;
+        }
+
+        /* правая колонка — таблица, но в необычном оформлении */
+        .table-section {
+            background: white;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.08);
+            border: 1px solid #eef2f8;
+            transform: translateY(2rem);
+        }
+
+        .table-header {
+            background: #1e293b;
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header span:first-child {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .shame-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .shame-table th {
+            text-align: left;
+            padding: 1rem 1.2rem;
+            background: #f1f5f9;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #475569;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .shame-table td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid #eef2f8;
+            font-weight: 500;
+        }
+
+        .shame-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rank-number {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #e63946;
+        }
+
+        .level-tag {
+            background: #e63946;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        /* дополнительная секция — как подвал с цитатой */
+        .quote-block {
+            grid-column: span 2;
+            margin-top: 1rem;
+            background: #ffffffd9;
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            padding: 1rem 2rem;
+            text-align: center;
+            border: 1px solid #eef2f8;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+
+        /* адаптив */
+        @media (max-width: 1000px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .table-section {
+                transform: translateY(0);
+            }
+            body {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .shame-table thead {
+                display: none;
+            }
+            .shame-table, .shame-table tbody, .shame-table tr, .shame-table td {
+                display: block;
+                width: 100%;
+            }
+            .shame-table tr {
+                margin-bottom: 1rem;
+                border: 1px solid #eef2f8;
+                border-radius: 1rem;
+                background: white;
+            }
+            .shame-table td {
+                display: flex;
+                justify-content: space-between;
+                padding: 0.7rem 1rem;
+                border-bottom: 1px solid #f0f2f5;
+            }
+            .shame-table td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                font-size: 0.7rem;
+                color: #e63946;
+            }
+        }
+
+        /* мелкие штрихи */
+        .footer-note {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: #94a3b8;
+            grid-column: span 2;
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <!-- левая колонка: профиль позорника -->
+    <div class="profile-section">
+        <div class="shame-header">
+            <div class="rank-badge">#1</div>
+            <h2>Позор <span>года</span></h2>
+        </div>
+        <div class="avatar-large">
+            <i class="fas fa-user-alt-slash"></i>
+        </div>
+        <div class="bio">
+            <h3>Арсений Струков</h3>
+            <div class="title-shame"><i class="fas fa-skull"></i> абсолютный антигерой</div>
+        </div>
+        <div class="fact-list">
+            <div class="fact-item"><i class="fas fa-check-circle"></i> <span>Единственный фигурант реестра «Позорники Москвы»</span></div>
+            <div class="fact-item"><i class="fas fa-chart-line"></i> <span>Уровень позора: максимальный (не подлежит пересмотру)</span></div>
+            <div class="fact-item"><i class="fas fa-calendar-alt"></i> <span>Зафиксирован 18 апреля 2026</span></div>
+            <div class="fact-item"><i class="fas fa-ban"></i> <span>Без права на апелляцию</span></div>
+        </div>
+    </div>
+
+    <!-- правая колонка: таблица (нестандартное расположение, смещена вниз) -->
+    <div class="table-section">
+        <div class="table-header">
+            <span>реестр позора</span>
+            <span><i class="fas fa-gavel"></i> вердикт</span>
+        </div>
+        <table class="shame-table">
+            <thead>
+                <tr><th>#</th><th>Имя</th><th>Деяние</th><th>Уровень</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="#" class="rank-number">01</td>
+                    <td data-label="Имя">Арсений Струков</td>
+                    <td data-label="Деяние">Антирекорд столицы · позорный мем</td>
+                    <td data-label="Уровень"><span class="level-tag">МАКСИМАЛЬНЫЙ</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- цитата / подпись -->
+    <div class="quote-block">
+        <i class="fas fa-quote-left" style="color: #e63946; margin-right: 8px;"></i> 
+        Позор не измеряется баллами. Он либо есть, либо его нет. У Арсения Струкова — есть.
+    </div>
+    <div class="footer-note">
+        <i class="fas fa-database"></i> Единый официальный список позорников Москвы. Без действий, без счётчиков — только факт.
+    </div>
+</div>
+</body>
+</html>
